@@ -4,7 +4,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<meta http-equiv="Content-Security-Policy" content="default-src *; script-src *; object-src *; style-src *; img-src *; media-src *; frame-src *; font-src *; connect-src *;">
+		<meta http-equiv="X-Content-Security-Policy" content="default-src *; script-src *; object-src *; style-src *; img-src *; media-src *; frame-src *; font-src *; connect-src *;">
+		<meta http-equiv="X-WebKit-CSP" content="default-src *; script-src *; object-src *; style-src *; img-src *; media-src *; frame-src *; font-src *; connect-src *;">
+
+		<title>How does 🙈 or 💩 affect our S�curity?</title>
 
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/reveal.css">
@@ -25,8 +29,43 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h2>How does 🙈 or 💩 affect our S�curity?</h2>
+					<h3>A bughunter perspective to pwn web apps</h3>
+					<p>
+						<small>Created by <a href="http://drehsec.tk">Christopher Bleckmann-Dreher</a> / <a href="http://twitter.com/schniggie">@schniggie</a></small>
+					</p>
+				</section>
+
+				<section data-background="public/agenda.png" data-background-size="1000px">
+					<h2>Agenda</h2>
+					<ol>
+						<li>WhoAmI</li>
+						<li>ASCII and ISO-8859</li>
+						<li>Unicode</li>
+						<li>Unicode encodings</li>
+						<li>Security implications 101</li>
+						<li>Real world examples</li>
+						<li>Summary + QA</li>
+					</ol>
+				</section>
+
+				<section data-background="public/me.gif">
+				<div id='boxedtext'>
+					<h2>WhoAmI</h2>
+					<ol>
+						<li>IT Security Consultant / Pentester</li>
+						<li>Bughunter (retired)</li>
+						<li>Author</li>
+					</ol>
+					<p>
+						<img data-src="public/visitenkarte_front.png" height=200px>
+						<img data-src="public/synack.png" height=200px>
+						<img data-src="public/publikationen.jpg" height=200px>
+						<img data-src="public/tatoo.jpg" height=200px>
+					</p>
+				</div>
+				</section>
 			</div>
 		</div>
 
