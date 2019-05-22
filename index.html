@@ -31,7 +31,7 @@
 			<div class="slides">
 				<section>
 					<h2>How does 🙈 or 💩 affect our S�curity?</h2>
-					<h3>A bughunter perspective to pwn web apps</h3>
+					<h3>A bughunter and offensive perspective on Ⓔⓝⓒⓞⓓⓘⓝⓖ ⓕⓤⓒⓚ ⓤⓟⓢ</h3>
 					<p>
 						<small>Created by <a href="http://drehsec.tk">Christopher Bleckmann-Dreher</a> / <a href="http://twitter.com/schniggie">@schniggie</a></small>
 					</p>
@@ -54,7 +54,7 @@
 				<div id='boxedtext'>
 					<h2>WhoAmI</h2>
 					<ol>
-						<li>IT Security Consultant / Pentester</li>
+						<li>Offensive IT sec guy / Pentester</li>
 						<li>Bughunter (retired)</li>
 						<li>Author</li>
 					</ol>
@@ -65,6 +65,334 @@
 						<img data-src="public/tatoo.jpg" height=200px>
 					</p>
 				</div>
+				</section>
+				<section>
+					<h3>ASCII</h3>
+					<img style="float:right; background:none; border:none; box-shadow:none;" data-src="public/ascii.png">
+					<ul style="display: block">
+						<li>American Standard Code for Information Interchange</li>
+						<li>Established in 1963</li>
+						<li>7-Bit character set</li>
+						<ul>
+							<li>Only 128 characters</li>
+							<li>0000000 – 1111111</li>
+						</ul>
+						<li>A: (65)₁₀ = (41)₁₆ = (1000001)₂</li>
+						<li>a: (97)₁₀ = (61)₁₆ =  (1100001)₂</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>ISO-8859-?</h3>
+					<img style="float:right; background:none; border:none; box-shadow:none;" data-src="public/iso8859.png">
+					<ul style="display: block">
+						<li>ASCII compatible 👍</li>
+						<li>8-Bit character set</li>
+						<ul>
+							<li>256 characters</li>
+							<li>00000000 – 11111111</li>
+						</ul>
+						<li>8859-2: (Central Europe)</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Unicode</h3>
+					<ul style="display: block">
+						<li>Since 1991</li>
+						<li>MultiByte character set</li>
+						<li>Fully ASCII and ISO-8859 compatible 👍</li>
+						<li>Different encodings (UTF-8, UTF-16, UTF-32, EBCDIC, …)</li>
+					</ul>
+					<img style="background:none; border:none; box-shadow:none;" data-src="public/unicode.png">
+				</section>
+
+				<section data-background="public/emoji.png">
+					<h3>Unicode</h3>
+					<ul style="display: block">
+						<li>U+0000 – U+10FFFF</li>
+						<br />
+						<li>U+0000 – U+007F: ASCII</li>
+						<li>U+0080 – U+00FF: ISO</li>
+						<br />
+						<li>U+0000 – U+FFFF (BMP: Basic Multilingual Plane) = 65536 characters</li>
+						<li>U+010000 – U+10FFFF (Astral Planes) = Over a million</li>
+
+					</ul>
+					<img style="background:none; border:none; box-shadow:none;" data-src="public/unicode_poo.png">
+				</section>
+
+				<section data-background="public/utf_overview.png" data-background-size="900px">
+					<h3>Unicode Encodings</h3><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+				</section>
+
+				<section>
+					<h5>Security Implications - Length of UTF8 String</h5>
+					<pre><code data-trim data-noescape>
+						size_t length = measure(str1) + measure(str2) + 1;
+						char *concat = malloc(sizeof(char) * length);
+
+						if(concat == NULL)
+						{
+								// error
+						}
+
+						snprintf(concat, length, "%s%s", str1, str2);
+
+						int measure(char *string) {
+								// allocate enough memory to hold the wide string
+								size_t needed = mbstowcs(NULL, string, 0) + 1;
+								wchar_t *wcstring = malloc(needed * sizeof *wcstring);
+								if (!wcstring) return -1;
+
+								// change encodings
+								if (mbstowcs(wcstring, string, needed) == (size_t)-1) return -2;
+
+								// measure width
+								int width = wcswidth(wcstring, needed);
+
+								free(wcstring);
+								return width;
+						}
+					</code></pre>
+					<p class="fragment">
+						<img data-src="public/buffer_overflow.gif" height=150px>
+					</p>
+				</section>
+
+				<section data-transition="zoom">
+						<h4>Security Implications - JavaScript Compare</h4>
+						<img data-src="public/manana_1.png" width=800px>
+				</section>
+
+				<section data-background="public/minion_confused.png" data-background-size="650px" data-transition="zoom">
+						<h4>Security Implications - JavaScript Compare</h4>
+						<img data-src="public/manana_2.png" width=800px>
+				</section>
+
+				<section>
+						<h4>Security Implications - JavaScript Compare</h4>
+						<img data-src="public/manana_3.png" width=1000px>
+				</section>
+
+				<section data-transition="zoom">
+						<h4>Security Implications - JavaScript RegEx</h4>
+						<img data-src="public/regex_1.png" width=800px>
+				</section>
+
+				<section data-transition="zoom">
+						<h4>Security Implications - JavaScript RegEx</h4>
+						<img data-src="public/regex_2.png" width=800px>
+				</section>
+
+				<section>
+						<h4>Security Implications - JavaScript RegEx</h4>
+						<img data-src="public/regex_3.png" width=800px>
+						<ul>
+							<li>Test it yourself http://scriptular.com/</li>
+						</ul>
+				</section>
+
+				<section>
+						<h4>Security Implications - MySQL vs. UTF-8</h4>
+						<img data-src="public/mysql_1.png" width=800px>
+				</section>
+
+				<section data-background="public/facepalm.gif">
+						<h4>Security Implications - MySQL vs. UTF-8</h4>
+						<img data-src="public/mysql_2.png" width=800px>
+				</section>
+
+				<section data-background="public/facepalm.gif">
+						<h4>Security Implications - MySQL vs. UTF-8</h4><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+				</section>
+
+				<section data-background="public/mysql_3.png" data-background-size="1000px">
+						<h4>Security Implications - MySQL vs. UTF-8</h4><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+				</section>
+
+				<section data-background="public/attack_cat.jpeg">
+						<h3>Abusing Unicode to attack a victim</h3>
+				</section>
+
+				<section data-transition="zoom">
+						<h4>Anything suspicious?</h4>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/phishing_1.png" width=1000px>
+				</section>
+
+				<section data-transition="zoom">
+						<h4>Anything suspicious?</h4>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/phishing_2.png" width=1000px>
+				</section>
+
+				<section data-background="public/poo_domain.png">
+						<h3>IDN Domains</h3>
+						<ul>
+							<li>Allowed since end of 2009</li>
+							<li>Stored as ASCII strings using Punycode transcription</li>
+							<li>No changes to the DNS system needed</li>
+						</ul>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/idn.png" width=1000px>
+						<p style="float:right;font-size: 20px;">Source: https://en.wikipedia.org/wiki/Internationalized_domain_name</p>
+				</section>
+
+				<section>
+						<h3>IDN Domains</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/punycode.png" width=1000px>
+				</section>
+
+				<section>
+						<h3>IDN Domains and Mailing</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/sendmail.png" width=1000px>
+				</section>
+
+				<section>
+						<h4>IDN Domains – Real world attack scenario</h4>
+						<p style="float:center;font-size: 15px;">Source: https://www.heise.de/newsticker/meldung/Browser-noch-immer-fuer-Phishing-per-Unicode-Domain-anfaellig-3686474.html</p>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/idn_epic.png" width=800px>
+				</section>
+
+				<section>
+						<h4>IDN Domains – Find good ones</h4>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/typo_with_pause.gif">
+				</section>
+
+				<section>
+						<h4>IDN $$$</h4>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/idn_hackerone.png">
+				</section>
+
+				<section data-background="public/LeftRightWrong.png">
+						<h4>Left or right?</h4>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/rtol_1.png" width=700px>
+				</section>
+
+				<section>
+						<h4>Left or right?</h4>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/rtol_2.png" width=800px><br/>
+						Howto:<pre>ruby -e 'File.rename("backdoor_ppt.exe", "resume\xe2\x80\xaetpp.exe")'</pre>
+				</section>
+
+				<section>
+						<h3>RTLO Snapchat</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/rtlo_4.jpg" width=500px><br/>
+				</section>
+
+				<section>
+						<h3>RTLO $250</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/rtlo_3.png" width=1000px><br/>
+				</section>
+
+				<section>
+						<h3>RTLO Go Go Go and hunt ... (from 2017)</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/rtlo_5.png"><br/>
+				</section>
+
+				<section>
+						<h3>Crashing every iOS and OS X device</h3>
+						<ul>
+							<li>In 2013 every iOS and OS X device was vulnerable to</li>
+						</ul>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/ios_1.png" width=1000px><br/>
+						<p style="float:right;font-size: 15px;">Source: https://arstechnica.com/apple/2013/08/rendering-bug-crashes-os-x-and-ios-apps-with-string-of-arabic-characters/</p>
+						<ul>
+							<li>For example Browser, Messages (SMS, iMessage, Whatsapp, …), Wireless Hotspots</li>
+						</ul>
+				</section>
+
+				<section>
+						<h3>Crashing every iOS and OS X device</h3>
+						<ul>
+							<li>Even Facebook implemented filter withtin Messenger</li>
+						</ul>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/ios_2.png" width=1000px><br/>
+				</section>
+
+				<section>
+						<h3>Frontend 💔 Backend</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/me_1.png" width=1000px><br/>
+				</section>
+
+				<section>
+						<h3>Frontend 💔 Backend</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/me_2.png" width=1000px><br/>
+				</section>
+
+				<section>
+						<h3>Spotify account hijacking</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/spotify_1.png" width=700px><br/>
+				</section>
+
+				<section>
+						<h3>Spotify account hijacking</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/spotify_2.png" width=900px><br/>
+						<pre>
+
+1. User: ᴮᴵᴳᴮᴵᴿᴰ triggers forgot password
+
+1. Forgot password:
+>>> canonical_username(u'\u1d2e\u1d35\u1d33\u1d2e\u1d35\u1d3f\u1d30')
+u'BIGBIRD'
+
+2. Click on passwort reset Link in Mail:
+>>> canonical_username(canonical_username(u'\u1d2e\u1d35\u1d33\u1d2e\u1d35\u1d3f\u1d30'))
+u'bigbird'
+						</pre>
+				</section>
+
+				<section data-background="public/schranke.jpg">
+						<h3>Phabricator Bypass</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/phabricator_1.png" width=900px><br/>
+				</section>
+
+				<section data-background="public/schranke.jpg">
+						<h3>Phabricator Bypass</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/phabricator_2.png" width=900px><br/>
+				</section>
+
+				<section data-background="public/schranke.jpg">
+						<h3>Phabricator Bypass</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/phabricator_3.png" width=900px><br/>
+				</section>
+
+				<section>
+						<h3>PILE OF POO</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/poo_nullbyte.png" width=900px><br/>
+				</section>
+
+				<section data-background="public/minion_qa.png" data-background-size="600px">
+						<h3>Summary</h3>
+						<p style="font-size: 40px;">
+							For developer:
+							<ul style="font-size: 30px;">
+								<li>Verify that methods, functions, frameworks can handle Unicode</li>
+								<li>Input validation should also handle Unicode characters</li>
+								<li>Verify that all system and interconnection can handle Unicode</li>
+							</ul>
+							For Hunters:<br />
+							<ul style="font-size: 30px;">
+								<li>Go and inject 💩</li>
+								<li>Automate it / Implement it in tools</li>
+							</ul>
+						</p>
+				</section>
+
+				<section data-background="public/thanks.gif">
+					<div id='boxedtext'>
+						<h2>Acknowledgment</h2>
+						<ul>
+							<li>Mathias Bynens @mathias</li>
+							<li>@FakeUnicode</li>
+						</ul><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+					</div>
+				</section>
+
+				<section data-background="public/minion_follower.gif">
+						<h2>Thanks for your time :)</h2>
+						<p class="fragment">
+							<img data-src="public/visitenkarte_front.png" height=300px>
+							<img data-src="public/visitenkarte_back.png" height=300px>
+						</p>
 				</section>
 			</div>
 		</div>
