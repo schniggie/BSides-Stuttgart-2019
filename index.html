@@ -29,11 +29,12 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>
+				<section data-background="public/unicode_bg.jpg" data-background-opacity=0.1	>
 					<h2>How does 🙈 or 💩 affect our S�curity?</h2>
-					<h3>A bughunter and offensive perspective on Ⓔⓝⓒⓞⓓⓘⓝⓖ ⓕⓤⓒⓚ ⓤⓟⓢ</h3>
+					<h4>A bughunter and offensive perspective on Ⓔⓝⓒⓞⓓⓘⓝⓖ ⓕⓤⓒⓚ ⓤⓟⓢ</h4>
 					<p>
-						<small>Created by <a href="http://drehsec.tk">Christopher Bleckmann-Dreher</a> / <a href="http://twitter.com/schniggie">@schniggie</a></small>
+						<small>Created by <a target="_blank" rel="noopener noreferrer" href="http://drehsec.tk">Christopher Bleckmann-Dreher</a> / <a target="_blank" rel="noopener noreferrer" href="http://twitter.com/schniggie">@schniggie</a></small><br />
+						<small><a href="http://bsides.合.xyz">http://bsides.合.xyz</a></small>
 					</p>
 				</section>
 
@@ -65,6 +66,10 @@
 						<img data-src="public/tatoo.jpg" height=200px>
 					</p>
 				</div>
+				</section>
+				<section data-background="public/zdnet.png">
+				</section>
+				<section data-background-iframe="https://wall2.sli.do/event/mx0xh8so" data-background-interactive>
 				</section>
 				<section>
 					<h3>ASCII</h3>
@@ -128,14 +133,10 @@
 
 				<section>
 					<h5>Security Implications - Length of UTF8 String</h5>
-					<pre><code data-trim data-noescape>
+					<pre class="stretch"><code data-trim data-noescape>
 						size_t length = measure(str1) + measure(str2) + 1;
 						char *concat = malloc(sizeof(char) * length);
-
-						if(concat == NULL)
-						{
-								// error
-						}
+						if(concat == NULL) { // error }
 
 						snprintf(concat, length, "%s%s", str1, str2);
 
@@ -155,9 +156,9 @@
 								return width;
 						}
 					</code></pre>
-					<p class="fragment">
+					<!--<p class="fragment">
 						<img data-src="public/buffer_overflow.gif" height=150px>
-					</p>
+					</p>!-->
 				</section>
 
 				<section data-transition="zoom">
@@ -189,7 +190,7 @@
 						<h4>Security Implications - JavaScript RegEx</h4>
 						<img data-src="public/regex_3.png" width=800px>
 						<ul>
-							<li>Test it yourself http://scriptular.com/</li>
+							<li>Test it yourself <a target="_blank" rel="noopener noreferrer" href="http://scriptular.com/">http://scriptular.com</a></li>
 						</ul>
 				</section>
 
@@ -233,7 +234,7 @@
 							<li>No changes to the DNS system needed</li>
 						</ul>
 						<img style="background:none; border:none; box-shadow:none;" data-src="public/idn.png" width=1000px>
-						<p style="float:right;font-size: 20px;">Source: https://en.wikipedia.org/wiki/Internationalized_domain_name</p>
+						<p style="float:right;font-size: 20px;">Source: <a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Internationalized_domain_name">https://en.wikipedia.org/wiki/Internationalized_domain_name</a></p>
 				</section>
 
 				<section>
@@ -248,7 +249,7 @@
 
 				<section>
 						<h4>IDN Domains – Real world attack scenario</h4>
-						<p style="float:center;font-size: 15px;">Source: https://www.heise.de/newsticker/meldung/Browser-noch-immer-fuer-Phishing-per-Unicode-Domain-anfaellig-3686474.html</p>
+						<p style="float:center;font-size: 15px;">Source: <a target="_blank" rel="noopener noreferrer" href="https://www.heise.de/newsticker/meldung/Browser-noch-immer-fuer-Phishing-per-Unicode-Domain-anfaellig-3686474.html">https://www.heise.de/newsticker/meldung/Browser-noch-immer-fuer-Phishing-per-Unicode-Domain-anfaellig-3686474.html</a></p>
 						<img style="background:none; border:none; box-shadow:none;" data-src="public/idn_epic.png" width=800px>
 				</section>
 
@@ -289,12 +290,17 @@
 				</section>
 
 				<section>
+						<h3>2019 and still sth. to care about?</h3>
+						<img style="background:none; border:none; box-shadow:none;" data-src="public/rtlo_6.png"><br/>
+				</section>
+
+				<section>
 						<h3>Crashing every iOS and OS X device</h3>
 						<ul>
 							<li>In 2013 every iOS and OS X device was vulnerable to</li>
 						</ul>
 						<img style="background:none; border:none; box-shadow:none;" data-src="public/ios_1.png" width=1000px><br/>
-						<p style="float:right;font-size: 15px;">Source: https://arstechnica.com/apple/2013/08/rendering-bug-crashes-os-x-and-ios-apps-with-string-of-arabic-characters/</p>
+						<p style="float:right;font-size: 15px;">Source: <a target="_blank" rel="noopener noreferrer" href="https://arstechnica.com/apple/2013/08/rendering-bug-crashes-os-x-and-ios-apps-with-string-of-arabic-characters/">https://arstechnica.com/apple/2013/08/rendering-bug-crashes-os-x-and-ios-apps-with-string-of-arabic-characters</a></p>
 						<ul>
 							<li>For example Browser, Messages (SMS, iMessage, Whatsapp, …), Wireless Hotspots</li>
 						</ul>
@@ -334,7 +340,7 @@
 >>> canonical_username(u'\u1d2e\u1d35\u1d33\u1d2e\u1d35\u1d3f\u1d30')
 u'BIGBIRD'
 
-2. Click on passwort reset Link in Mail:
+2. Click on password reset Link in Mail:
 >>> canonical_username(canonical_username(u'\u1d2e\u1d35\u1d33\u1d2e\u1d35\u1d3f\u1d30'))
 u'bigbird'
 						</pre>
@@ -394,6 +400,8 @@ u'bigbird'
 							<img data-src="public/visitenkarte_back.png" height=300px>
 						</p>
 				</section>
+				<section data-background-iframe="https://wall2.sli.do/event/mx0xh8so" data-background-interactive>
+				</section>
 			</div>
 		</div>
 
@@ -408,7 +416,7 @@ u'bigbird'
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true }
+					{ src: 'plugin/highlight/highlight.js', async: true },
 				]
 			});
 		</script>
